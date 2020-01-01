@@ -5,10 +5,12 @@ import PropTypes from "prop-types";
 import styles from "./index.module.css";
 
 const Item = ({ name, description, category, tags }) => (
-    <div>
+    <div className={styles.container}>
         <div className={styles.item}>
             <div>
-                <Link to={`/${name}`}>{name}</Link>
+                <Link className={styles.link} to={`/${name}`}>
+                    {name}
+                </Link>
             </div>
             <div>{category}</div>
             <div>{tags}</div>

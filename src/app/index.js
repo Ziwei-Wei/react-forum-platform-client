@@ -11,7 +11,6 @@ import User from "views/User";
 import NotFound from "views/NotFound";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "app/styles.css";
 import styles from "app/index.module.css";
 
 const App = () => (

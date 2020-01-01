@@ -1,13 +1,15 @@
 import React from "react";
-import Toggle from "../Toggle";
+import Toggle from "components/Topic/Toggle";
 import PropTypes from "prop-types";
+
+import styles from "./index.module.css";
 
 const TopicListController = ({
     sortingTargetToMethod,
     toggleSortingMethod
 }) => {
     return (
-        <div>
+        <div className={styles.container}>
             {Object.keys(sortingTargetToMethod).map(target => (
                 <Toggle
                     sortingTarget={target}

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+import styles from "./index.module.css";
+
 const Toggle = ({ sortingTarget, sortingMethods, toggleMethod }) => {
     const [method, setMethod] = useState("");
     const onClick = () => {
@@ -20,7 +22,9 @@ const Toggle = ({ sortingTarget, sortingMethods, toggleMethod }) => {
 
     return (
         <div>
-            <button onClick={onClick}>{sortingTarget}</button>
+            <button className={styles.toggle} onClick={onClick}>
+                {sortingTarget}
+            </button>
         </div>
     );
 };

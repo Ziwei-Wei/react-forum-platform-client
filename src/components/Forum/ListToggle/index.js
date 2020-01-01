@@ -22,7 +22,7 @@ const Toggle = ({ sortingTarget, sortingMethods, toggleMethod }) => {
 
     return (
         <div>
-            <button className={styles.button} onClick={onClick}>
+            <button className={styles.toggle} onClick={onClick}>
                 {sortingTarget}
             </button>
         </div>

@@ -1,0 +1,8 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 100px;
+    width: 50%;
+    border-bottom: 1px solid black;
+}

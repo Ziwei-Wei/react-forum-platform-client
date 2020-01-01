@@ -19,6 +19,7 @@ const Topics = () => {
     const params = useParams();
     const dispatch = useDispatch();
     const topics = useSelector(state => state.topics);
+    console.log(params);
 
     const initTopics = async () => {
         dispatch({ type: INIT_TOPICS, forumName: params.forum });
@@ -52,17 +53,21 @@ const Topics = () => {
         });
     };
 
-    useEffect(initTopics, []);
-    useEffect(updateTopics, [topics.sortingMethod]);
+    useEffect(() => {
+        initTopics();
+    }, []);
+    useEffect(() => {
+        updateTopics();
+    }, [topics.sortingMethod]);
 
     return (
-        <div>
+        <>
             <TopicListController
                 sortingTargetToMethod={TOPICS_SORTING_METHODS}
                 toggleSortingMethod={toggleSortingMethod}
             />
-            <TopicList topics={topics.topicList} />
-        </div>
+            <TopicList items={topics.topicList} forum={params.forum} />
+        </>
     );
 };
 

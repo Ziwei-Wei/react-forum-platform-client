@@ -2,40 +2,43 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import styles from "./index.module.css";
+
 const TopicItem = ({
     forum,
-    author,
+    user,
     title,
     category,
     tags,
-    views,
-    replies,
-    activity
+    viewNum,
+    replyNum,
+    updatedAt
 }) => {
     return (
-        <Link to={`/${forum}/${title}`}>
-            <li>
-                <div>{author}</div>
-                <div>{title}</div>
+        <>
+            <div className={styles.item}>
+                <div>
+                    <Link to={`/${forum}/${title}`}>{title}</Link>
+                </div>
                 <div>{category}</div>
                 <div>{tags}</div>
-                <div>{views}</div>
-                <div>{replies}</div>
-                <div>{activity}</div>
-            </li>
-        </Link>
+                <div>{viewNum}</div>
+                <div>{replyNum}</div>
+                <div>{updatedAt}</div>
+            </div>
+        </>
     );
 };
 
 TopicItem.propTypes = {
     forum: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    views: PropTypes.number.isRequired,
-    replies: PropTypes.number.isRequired,
-    activity: PropTypes.string.isRequired
+    viewNum: PropTypes.number.isRequired,
+    replyNum: PropTypes.number.isRequired,
+    updatedAt: PropTypes.string.isRequired
 };
 
 export default TopicItem;
