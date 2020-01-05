@@ -4,11 +4,11 @@ import Item from "components/Topic/Item";
 
 import styles from "./index.module.css";
 
-const List = ({ items, forum }) => (
+const List = ({ items, forumName, forumId }) => (
     <>
         <div className={styles.container}>
             {items.map(item => (
-                <Item forum={forum} {...item} />
+                <Item forumName={forumName} forumId={forumId} {...item} />
             ))}
         </div>
     </>
@@ -17,14 +17,18 @@ const List = ({ items, forum }) => (
 List.propTypes = {
     topics: PropTypes.arrayOf(
         PropTypes.shape({
-            forum: PropTypes.string.isRequired,
-            user: PropTypes.object.isRequired,
-            title: PropTypes.string.isRequired,
-            category: PropTypes.string.isRequired,
-            tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-            viewNum: PropTypes.number.isRequired,
+            forumName: PropTypes.string.isRequired,
+            forumId: PropTypes.string.isRequired,
+            _id: PropTypes.string.isRequired,
+            user: PropTypes.shape({
+                avatarUrl: PropTypes.string.isRequired,
+                name: PropTypes.string.isRequired
+            }),
+            name: PropTypes.string.isRequired,
             replyNum: PropTypes.number.isRequired,
-            updatedAt: PropTypes.string.isRequired
+            viewNum: PropTypes.number.isRequired,
+            updatedAt: PropTypes.string.isRequired,
+            transformTopicName: PropTypes.func.isRequired
         }).isRequired
     ).isRequired
 };

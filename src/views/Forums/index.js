@@ -17,18 +17,16 @@ import {
 
 const Forums = () => {
     const dispatch = useDispatch();
-    const forums = useSelector(state => state.forums);
+    const filteringMethod = useSelector(state => state.forums.filteringMethod);
+    const sortingMethod = useSelector(state => state.forums.sortingMethod);
+    const forumList = useSelector(state => state.forums.forumList);
 
-    const initForums = async () => {
-        await updateForums();
-    };
-
-    const updateForums = async () => {
+    const update = async () => {
         try {
             dispatch({ type: UPDATE_FORUMS_START });
 
             const res = await axios.get(
-                `/api/forum?sorting_method=${forums.sortingMethod}&filtering_method=${forums.filteringMethod}`
+                `/api/forum?sorting_method=${sortingMethod}&filtering_method=${filteringMethod}`
             );
 
             dispatch({
@@ -43,33 +41,31 @@ const Forums = () => {
         }
     };
 
-    const toggleSortingMethod = newMethod => {
+    const initForums = () => {
+        update();
+    };
+
+    const updateForums = () => {
+        update();
+    };
+
+    const toggleSortMethod = newMethod => {
         dispatch({
             type: TOGGLE_FORUMS_SORTING_METHOD,
             sortingMethod: newMethod
         });
     };
 
-    const toggleFilteringMethod = newMethod => {
-        dispatch({
-            type: TOGGLE_FORUMS_FILTERING_METHOD,
-            filteringMethod: newMethod
-        });
-    };
-
     useEffect(initForums, []);
-    useEffect(updateForums, [forums.sortingMethod]);
-    useEffect(updateForums, [forums.filteringMethod]);
+    useEffect(updateForums, [sortingMethod]);
 
     return (
         <>
             <ForumListController
-                sortingTargetToMethod={FORUMS_SORTING_METHODS}
-                filteringTargetToMethod={FORUMS_FILTERING_METHODS}
-                toggleSortingMethod={toggleSortingMethod}
-                toggleFilteringMethod={toggleFilteringMethod}
+                forumSortMethods={FORUMS_SORTING_METHODS.name}
+                toggleSortMethod={toggleSortMethod}
             />
-            <ForumList forums={forums.forumList} />
+            <ForumList forums={forumList} />
         </>
     );
 };

@@ -4,7 +4,7 @@ import {
     UPDATE_TOPICS_START,
     UPDATE_TOPICS_SUCCESS,
     UPDATE_TOPICS_FAILURE,
-    TOGGLE_TOPICS_SORTING_METHOD
+    TOGGLE_TOPICS_SORT_METHOD
 } from "./constants";
 
 const topicsReducer = (state = INITIAL_TOPICS_STATE, action) => {
@@ -12,6 +12,7 @@ const topicsReducer = (state = INITIAL_TOPICS_STATE, action) => {
         case INIT_TOPICS:
             return {
                 ...state,
+                forumId: action.forumId,
                 forumName: action.forumName
             };
         case UPDATE_TOPICS_START:
@@ -33,10 +34,10 @@ const topicsReducer = (state = INITIAL_TOPICS_STATE, action) => {
                 isLoading: false,
                 error: action.error
             };
-        case TOGGLE_TOPICS_SORTING_METHOD:
+        case TOGGLE_TOPICS_SORT_METHOD:
             return {
                 ...state,
-                sortingMethod: action.sortingMethod
+                sortMethod: action.sortMethod
             };
         default:
             return state;

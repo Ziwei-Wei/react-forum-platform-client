@@ -4,26 +4,33 @@ import PropTypes from "prop-types";
 
 import styles from "./index.module.css";
 
-const Item = ({ name, description, category, tags }) => (
+const Item = ({ _id, name, description, category }) => (
     <div className={styles.container}>
-        <div className={styles.item}>
-            <div>
-                <Link className={styles.link} to={`/${name}`}>
-                    {name}
-                </Link>
-            </div>
-            <div>{category}</div>
-            <div>{tags}</div>
+        <div className={styles.small_item}>
+            <Link
+                className={styles.link}
+                to={{
+                    pathname: `/${name}`,
+                    search: "",
+                    hash: "",
+                    state: { forumId: _id }
+                }}
+            >
+                {name}
+            </Link>
         </div>
-        <div>Introduction:{description}</div>
+        <div className={styles.small_item}>{category.name}</div>
+        <div className={styles.big_item}>{description}</div>
     </div>
 );
 
 Item.propTypes = {
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired
+    category: PropTypes.shape({
+        name: PropTypes.string.isRequired
+    })
 };
 
 export default Item;

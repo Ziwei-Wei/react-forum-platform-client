@@ -1,12 +1,11 @@
 .container {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.item {
-    display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 0.5px solid black;
 }
+
 .link {
     color: var(--dark);
     text-decoration: none;
@@ -14,4 +13,12 @@
 .link:hover {
     color: var(--dark);
     text-decoration: none;
+}
+
+.small_item {
+    flex: 1;
+}
+
+.big_item {
+    flex: 2;
 }

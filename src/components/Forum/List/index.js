@@ -2,21 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 import Item from "components/Forum/Item";
 
+import styles from "./index.module.css";
+
 const List = ({ forums }) => (
-    <ul>
+    <div className={styles.container}>
         {forums.map(forum => (
             <Item {...forum} />
         ))}
-    </ul>
+    </div>
 );
 
 List.propTypes = {
     topics: PropTypes.arrayOf(
         PropTypes.shape({
+            _id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
-            category: PropTypes.string.isRequired,
-            tags: PropTypes.arrayOf(PropTypes.string).isRequired
+            category: PropTypes.shape({
+                name: PropTypes.string.isRequired
+            })
         }).isRequired
     ).isRequired
 };

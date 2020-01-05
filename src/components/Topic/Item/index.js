@@ -5,40 +5,56 @@ import PropTypes from "prop-types";
 import styles from "./index.module.css";
 
 const TopicItem = ({
-    forum,
+    forumName,
+    forumId,
+    _id,
     user,
-    title,
-    category,
-    tags,
+    name,
     viewNum,
     replyNum,
     updatedAt
 }) => {
+    const fitNameToUrl = name => {
+        return name.replace(/([\s.,'"!?()]+)/, "-");
+    };
+
     return (
-        <>
-            <div className={styles.item}>
-                <div>
-                    <Link to={`/${forum}/${title}`}>{title}</Link>
-                </div>
-                <div>{category}</div>
-                <div>{tags}</div>
-                <div>{viewNum}</div>
-                <div>{replyNum}</div>
-                <div>{updatedAt}</div>
+        <div className={styles.container}>
+            <div className={styles.small_item}>
+                <img src={user.avatarUrl}>{user.name}</img>
             </div>
-        </>
+            <div className={styles.big_item}>
+                <Link
+                    to={{
+                        pathname: `/${forumName}/${fitNameToUrl(name)}`,
+                        search: "",
+                        hash: "",
+                        state: { forumId: forumId, topicId: _id }
+                    }}
+                >
+                    {name}
+                </Link>
+            </div>
+            <div className={styles.small_item}>{replyNum}</div>
+            <div className={styles.small_item}>{viewNum}</div>
+            <div className={styles.small_item}>{updatedAt}</div>
+        </div>
     );
 };
 
 TopicItem.propTypes = {
-    forum: PropTypes.string.isRequired,
-    user: PropTypes.object.isRequired,
-    title: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    viewNum: PropTypes.number.isRequired,
+    forumName: PropTypes.string.isRequired,
+    forumId: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+        avatarUrl: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    }),
+    name: PropTypes.string.isRequired,
     replyNum: PropTypes.number.isRequired,
-    updatedAt: PropTypes.string.isRequired
+    viewNum: PropTypes.number.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    transformTopicName: PropTypes.func.isRequired
 };
 
 export default TopicItem;

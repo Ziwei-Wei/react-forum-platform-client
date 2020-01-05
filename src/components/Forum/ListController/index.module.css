@@ -1,8 +1,25 @@
-.controller {
+.container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     min-width: 100px;
     width: 50%;
     border-bottom: 1px solid black;
+}
+
+.small_item {
+    flex: 1;
+}
+
+.big_item {
+    flex: 2;
+}
+
+.text_button {
+    border: none;
+    background-color: inherit;
+}
+
+.text_button:focus {
+    outline: 0;
 }
