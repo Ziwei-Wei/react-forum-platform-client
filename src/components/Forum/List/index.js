@@ -4,12 +4,16 @@ import Item from "components/Forum/Item";
 
 import styles from "./index.module.css";
 
-const List = ({ forums }) => (
-    <div className={styles.container}>
-        {forums.map(forum => (
-            <Item {...forum} />
-        ))}
-    </div>
+const List = ({ isLoading, forums }) => (
+    <>
+        {isLoading === false && (
+            <div className={styles.container}>
+                {forums.map(forum => (
+                    <Item {...forum} />
+                ))}
+            </div>
+        )}
+    </>
 );
 
 List.propTypes = {

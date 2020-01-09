@@ -1,0 +1,15 @@
+.button {
+    display: flex;
+    float: right;
+    border-radius: 50%;
+    background: transparent;
+    border: 0;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+.icon {
+    color: white;
+}

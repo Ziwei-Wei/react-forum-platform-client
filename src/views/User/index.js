@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import UserProfile from "components/User/UserProfile";
+import UserProfile from "components/User/Profile";
 import TopicList from "components/Topic/List";
-import ReplyList from "components/Reply/ReplyList";
+import ReplyList from "components/Reply/List";
 
 import {
     INIT_USER,

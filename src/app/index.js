@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import appStore from "app/store";
-import Header from "views/Header";
 import Forums from "views/Forums";
 import Topics from "views/Topics";
 import Discussion from "views/Discussion";
@@ -17,19 +16,18 @@ const App = () => (
     <>
         <Provider store={appStore}>
             <BrowserRouter>
-                <div className={styles.frame}>
-                    <Header />
+                <div className={styles.container}>
                     <Switch>
                         <Route exact path="/">
                             <Forums />
                         </Route>
-                        <Route path="/:forum">
+                        <Route exact path="/:forumName">
                             <Topics />
                         </Route>
-                        <Route path="/:forum/:discussion">
+                        <Route exact path="/:forumName/:topicName">
                             <Discussion />
                         </Route>
-                        <Route path="/user/:user">
+                        <Route exact path="/user/:username">
                             <User />
                         </Route>
                         <Route path="*">

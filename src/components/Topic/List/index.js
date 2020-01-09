@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Item from "components/Topic/Item";
 
+import { formatDate } from "utility/utility";
+
 import styles from "./index.module.css";
 
-const List = ({ items, forumName, forumId }) => (
-    <>
-        <div className={styles.container}>
-            {items.map(item => (
-                <Item forumName={forumName} forumId={forumId} {...item} />
-            ))}
-        </div>
-    </>
-);
+const List = ({ items, forumName, forumId }) => {
+    const [now, setNow] = useState();
+
+    useEffect(() => {
+        setNow(new Date());
+    }, []);
+
+    return (
+        <>
+            <div className={styles.container}>
+                {items.map(item => {
+                    item.updatedAt = formatDate(now, new Date(item.updatedAt));
+                    return (
+                        <Item
+                            forumName={forumName}
+                            forumId={forumId}
+                            {...item}
+                        />
+                    );
+                })}
+            </div>
+        </>
+    );
+};
 
 List.propTypes = {
     topics: PropTypes.arrayOf(

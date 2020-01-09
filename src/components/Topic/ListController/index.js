@@ -30,7 +30,9 @@ const Toggle = ({ name, topicSortMethods, toggleSortMethod }) => {
 
     return (
         <>
-            <button onClick={switchTopicSort}>{name}</button>
+            <button className={styles.text_button} onClick={switchTopicSort}>
+                {name}
+            </button>
         </>
     );
 };
@@ -45,6 +47,7 @@ const ListController = ({ topicSortMethods, toggleSortMethod }) => {
                     toggleSortMethod={toggleSortMethod}
                 />
             </div>
+            <div className={styles.small_item}></div>
             <div className={styles.small_item}>
                 <Toggle
                     name="Replies"

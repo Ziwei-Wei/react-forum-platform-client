@@ -35,11 +35,10 @@ const ListController = ({ forumSortMethods, toggleSortMethod }) => {
                     className={styles.text_button}
                     onClick={switchForumSort}
                 >
-                    forum
+                    Forum
                 </button>
             </div>
-            <div className={styles.small_item}>category</div>
-            <div className={styles.big_item}>description</div>
+            <div className={styles.big_item}>Description</div>
         </div>
     );
 };

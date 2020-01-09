@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    align-self: center;
+    max-width: 80rem;
+    width: 100%;
+    padding: 1rem 0rem;
+    border-bottom: 0.02px solid lightgrey;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.circle_img {
+    margin: 1rem;
+    text-align: center;
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+}
+
+.bold_link,
+.bold_link:hover,
+.bold_link:visited,
+.bold_link:link,
+.bold_link:active {
+    text-align: left;
+    color: dimgrey;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.date {
+    color: darkgrey;
+    align-self: right;
+}
+
+.content {
+    margin-left: 4rem;
+}

@@ -2,8 +2,14 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
+import Header from "components/Header";
+import Bulletin from "components/Bulletin";
+import Loading from "components/Loading";
+
 import ForumList from "components/Forum/List";
 import ForumListController from "components/Forum/ListController";
+
+import styles from "./index.module.css";
 
 import {
     FORUMS_SORTING_METHODS,
@@ -20,6 +26,7 @@ const Forums = () => {
     const filteringMethod = useSelector(state => state.forums.filteringMethod);
     const sortingMethod = useSelector(state => state.forums.sortingMethod);
     const forumList = useSelector(state => state.forums.forumList);
+    const isLoading = useSelector(state => state.forums.isLoading);
 
     const update = async () => {
         try {
@@ -61,11 +68,16 @@ const Forums = () => {
 
     return (
         <>
-            <ForumListController
-                forumSortMethods={FORUMS_SORTING_METHODS.name}
-                toggleSortMethod={toggleSortMethod}
-            />
-            <ForumList forums={forumList} />
+            <Header address={"./"} />
+            <div className={styles.container}>
+                <Bulletin />
+                <ForumListController
+                    forumSortMethods={FORUMS_SORTING_METHODS.name}
+                    toggleSortMethod={toggleSortMethod}
+                />
+                {isLoading === true && <Loading />}
+                <ForumList isLoading={isLoading} forums={forumList} />
+            </div>
         </>
     );
 };

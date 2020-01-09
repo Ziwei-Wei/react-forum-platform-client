@@ -11,7 +11,7 @@ export const UPDATE_TOPICS_FAILURE = "update_topics_failure";
 export const TOGGLE_TOPICS_SORT_METHOD = "toggle_topics_sorting_method";
 
 export const TOPICS_SORT_METHODS = {
-    topic: {
+    name: {
         asc: "by_name_asc",
         des: "by_name_des"
     },
@@ -37,7 +37,7 @@ export const INITIAL_TOPICS_STATE = {
     forumName: null,
     forumId: null,
     topicList: [],
-    sortMethod: TOPICS_SORT_METHODS.topic.asc,
+    sortMethod: TOPICS_SORT_METHODS.name.asc,
     isLoading: true,
     error: null
 };

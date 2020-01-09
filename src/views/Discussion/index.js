@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
-import TopicTitle from "components/Topic/Title";
-import ReplyList from "components/Reply/ReplyList";
+import Title from "components/Topic/Title";
+import List from "components/Reply/List";
+import Header from "components/Header";
+
+import RichTextEditor from "components/Editor";
+
+import styles from "./index.module.css";
 
 import {
     INIT_DISCUSSION,
@@ -15,29 +20,34 @@ import {
 
 const Discussion = () => {
     const params = useParams();
+    const location = useLocation();
     const dispatch = useDispatch();
     const discussion = useSelector(state => state.discussion);
 
-    const initDiscussion = async () => {
+    const init = async () => {
         dispatch({
             type: INIT_DISCUSSION,
-            forumName: params.forum,
-            topicName: params.topic
+            forumId: location.state.forumId,
+            topicId: location.state.topicId
         });
-        await updateDiscussion();
+        await update();
     };
 
-    const updateDiscussion = async () => {
+    const update = async () => {
         try {
             dispatch({ type: UPDATE_DISCUSSION_START });
 
-            const res = await axios.get(
-                `/api/forum/${params.forum}/${params.topic}`
+            const replies = await axios.get(
+                `/api/forum/${location.state.forumId}/topic/${location.state.topicId}/reply`
             );
 
             dispatch({
                 type: UPDATE_DISCUSSION_SUCCESS,
-                replyList: res.data
+                replyList: replies.data,
+                title: location.state.title,
+                category: location.state.category,
+                tags: location.state.tags,
+                updatedAt: location.state.updatedAt
             });
         } catch (error) {
             dispatch({
@@ -47,13 +57,31 @@ const Discussion = () => {
         }
     };
 
+    const initDiscussion = () => {
+        init();
+    };
+
     useEffect(initDiscussion, []);
 
     return (
-        <div>
-            <TopicTitle />
-            <ReplyList replies={discussion.replyList} />
-        </div>
+        <>
+            <Header
+                address={"./" + params.forumName + "/" + params.topicName}
+            />
+            {discussion.isLoading === false && (
+                <div className={styles.container}>
+                    <Title
+                        forumId={discussion.forumId}
+                        title={discussion.title}
+                        category={discussion.category}
+                        tags={discussion.tags}
+                        updatedAt={discussion.updatedAt}
+                    />
+                    <List items={discussion.replyList} />
+                </div>
+            )}
+            <RichTextEditor />
+        </>
     );
 };
 

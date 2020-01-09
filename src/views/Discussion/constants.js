@@ -13,8 +13,11 @@ initial state
 */
 
 export const INITIAL_DISCUSSION_STATE = {
-    forumName: null,
-    topicName: null,
+    forumId: null,
+    topicId: null,
+    title: "",
+    category: "",
+    updatedAt: "",
     replyList: [],
     isLoading: true,
     error: null

@@ -1,42 +1,39 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-    RESET_DISCUSSION,
-    UPDATE_DISCUSSION_START,
-    UPDATE_DISCUSSION_SUCCESS,
-    UPDATE_DISCUSSION_FAILURE
-} from "./actions";
+import React from "react";
+
+import Content from "components/Content";
+import styles from "./index.module.css";
 
 const Bulletin = () => {
-    const dispatch = useDispatch();
-    const discussion = useSelector(state => state.discussion);
-
-    // component did mount
-    useEffect(async () => {
-        try {
-            dispatch({ type: UPDATE_DISCUSSION_START });
-
-            const res = await axios.get(
-                `/api/forum/${topics.forumName}/topic?sorting_method=${topics.sortingMethod}`
-            );
-
-            dispatch({
-                type: UPDATE_DISCUSSION_SUCCESS,
-                topicName: res.data.topicName,
-                replyList: res.data.replyList
-            });
-        } catch (error) {
-            dispatch({
-                type: UPDATE_DISCUSSION_FAILURE,
-                error: error.message
-            });
-        }
-    }, []);
+    let defaultData = {
+        children: [
+            {
+                type: "paragraph",
+                children: [
+                    { text: "An opening paragraph with a " },
+                    {
+                        type: "link",
+                        url: "https://example.com",
+                        children: [{ text: "link" }]
+                    },
+                    { text: " in it." }
+                ]
+            },
+            {
+                type: "quote",
+                children: [{ text: "A wise quote." }]
+            },
+            {
+                type: "paragraph",
+                children: [{ text: "A closing paragraph!" }]
+            }
+        ]
+    };
 
     return (
-        <div>
-            <TopicListController />
-            <TopicList topics={topics.topicList} />
+        <div className={styles.container}>
+            <div className={styles.item}>
+                <Content data={defaultData} />
+            </div>
         </div>
     );
 };

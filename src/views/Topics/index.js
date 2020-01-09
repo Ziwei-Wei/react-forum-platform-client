@@ -3,8 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
+import Header from "components/Header";
+import Bulletin from "components/Bulletin";
+
 import TopicList from "components/Topic/List";
 import TopicListController from "components/Topic/ListController";
+
+import styles from "./index.module.css";
 
 import {
     INIT_TOPICS,
@@ -20,7 +25,6 @@ const Topics = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const forumId = useSelector(state => state.topics.forumId);
-    const forumName = useSelector(state => state.topics.forumName);
     const sortMethod = useSelector(state => state.topics.sortMethod);
     const topicList = useSelector(state => state.topics.topicList);
 
@@ -47,8 +51,8 @@ const Topics = () => {
     const initTopics = () => {
         dispatch({
             type: INIT_TOPICS,
-            forumName: params.forum,
-            forumId: location.forumId
+            forumName: params.forumName,
+            forumId: location.state.forumId
         });
         update();
     };
@@ -69,11 +73,19 @@ const Topics = () => {
 
     return (
         <>
-            <TopicListController
-                sortTargetToMethod={TOPICS_SORT_METHODS}
-                toggleSortingMethod={toggleSortMethod}
-            />
-            <TopicList items={topicList} forumId={forumId} />
+            <Header address={"./" + params.forumName} />
+            <div className={styles.container}>
+                <Bulletin />
+                <TopicListController
+                    topicSortMethods={TOPICS_SORT_METHODS}
+                    toggleSortMethod={toggleSortMethod}
+                />
+                <TopicList
+                    forumName={params.forumName}
+                    forumId={forumId}
+                    items={topicList}
+                />
+            </div>
         </>
     );
 };
