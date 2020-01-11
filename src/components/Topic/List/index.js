@@ -6,7 +6,7 @@ import { formatDate } from "utility/utility";
 
 import styles from "./index.module.css";
 
-const List = ({ items, forumName, forumId }) => {
+const List = ({ isLoading, items, forumName, forumId }) => {
     const [now, setNow] = useState();
 
     useEffect(() => {
@@ -15,18 +15,23 @@ const List = ({ items, forumName, forumId }) => {
 
     return (
         <>
-            <div className={styles.container}>
-                {items.map(item => {
-                    item.updatedAt = formatDate(now, new Date(item.updatedAt));
-                    return (
-                        <Item
-                            forumName={forumName}
-                            forumId={forumId}
-                            {...item}
-                        />
-                    );
-                })}
-            </div>
+            {isLoading === false && (
+                <div className={styles.container}>
+                    {items.map(item => {
+                        item.updatedAt = formatDate(
+                            now,
+                            new Date(item.updatedAt)
+                        );
+                        return (
+                            <Item
+                                forumName={forumName}
+                                forumId={forumId}
+                                {...item}
+                            />
+                        );
+                    })}
+                </div>
+            )}
         </>
     );
 };

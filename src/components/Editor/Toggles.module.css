@@ -1,0 +1,17 @@
+.icon_toggle{
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    margin: 0 0.25rem;
+    padding: 0.25rem;
+    color: grey;
+}
+
+.icon_toggle:hover{
+    background: lightgrey;
+}
+
+.icon_toggle:active{
+    color: black;
+}

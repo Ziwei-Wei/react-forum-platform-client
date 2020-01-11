@@ -68,7 +68,7 @@ const Forums = () => {
 
     return (
         <>
-            <Header address={"./"} />
+            <Header address={"./"} type="forum" />
             <div className={styles.container}>
                 <Bulletin />
                 <ForumListController

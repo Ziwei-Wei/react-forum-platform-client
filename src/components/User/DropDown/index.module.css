@@ -1,6 +1,5 @@
 .button {
     display: flex;
-    float: right;
     border-radius: 50%;
     background: transparent;
     border: 0;
@@ -12,4 +11,6 @@
 
 .icon {
     color: white;
+    display: block;
+    margin: auto;
 }

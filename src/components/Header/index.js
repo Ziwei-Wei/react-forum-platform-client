@@ -1,12 +1,13 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import { FaSearch, FaPlus } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { MdPlaylistAdd } from "react-icons/md";
 
 import DropDown from "components/User/DropDown";
 
 import styles from "./index.module.css";
 
-const Header = ({ user, address }) => {
+const Header = ({ user, address, type }) => {
     if (!user) {
         user = "visitor";
     }
@@ -23,6 +24,11 @@ const Header = ({ user, address }) => {
                         placeholder={"find @" + address}
                     />
                 </div>
+                {(type === "topic" || type === "forum") && (
+                    <div className={styles.add}>
+                        <MdPlaylistAdd className={styles.icon} />
+                    </div>
+                )}
                 <div className={styles.user}>
                     <DropDown />
                 </div>

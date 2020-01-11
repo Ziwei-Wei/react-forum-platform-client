@@ -6,8 +6,9 @@ import axios from "axios";
 import Title from "components/Topic/Title";
 import List from "components/Reply/List";
 import Header from "components/Header";
+import Loading from "components/Loading";
 
-import RichTextEditor from "components/Editor";
+import RichTextEditor from "components/Editor/RichTextEditor";
 
 import styles from "./index.module.css";
 
@@ -68,8 +69,9 @@ const Discussion = () => {
             <Header
                 address={"./" + params.forumName + "/" + params.topicName}
             />
+            {discussion.isLoading === true && <Loading />}
             {discussion.isLoading === false && (
-                <div className={styles.container}>
+                <div className={styles.title}>
                     <Title
                         forumId={discussion.forumId}
                         title={discussion.title}
@@ -80,7 +82,11 @@ const Discussion = () => {
                     <List items={discussion.replyList} />
                 </div>
             )}
-            <RichTextEditor />
+            {discussion.isLoading === false && (
+                <div className={styles.editor}>
+                    <RichTextEditor />
+                </div>
+            )}
         </>
     );
 };

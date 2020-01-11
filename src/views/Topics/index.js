@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Header from "components/Header";
 import Bulletin from "components/Bulletin";
+import Loading from "components/Loading";
 
 import TopicList from "components/Topic/List";
 import TopicListController from "components/Topic/ListController";
@@ -27,6 +28,7 @@ const Topics = () => {
     const forumId = useSelector(state => state.topics.forumId);
     const sortMethod = useSelector(state => state.topics.sortMethod);
     const topicList = useSelector(state => state.topics.topicList);
+    const isLoading = useSelector(state => state.topics.isLoading);
 
     const update = async () => {
         try {
@@ -73,14 +75,16 @@ const Topics = () => {
 
     return (
         <>
-            <Header address={"./" + params.forumName} />
+            <Header address={"./" + params.forumName} type="topic" />
             <div className={styles.container}>
                 <Bulletin />
                 <TopicListController
                     topicSortMethods={TOPICS_SORT_METHODS}
                     toggleSortMethod={toggleSortMethod}
                 />
+                {isLoading === true && <Loading />}
                 <TopicList
+                    isLoading={isLoading}
                     forumName={params.forumName}
                     forumId={forumId}
                     items={topicList}
