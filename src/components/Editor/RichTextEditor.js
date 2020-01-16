@@ -2,6 +2,7 @@
 a rich text editor based on slate
 */
 import React, { useMemo, useState, useCallback } from "react";
+import axios from "axios";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { withHistory } from "slate-history";
@@ -28,13 +29,24 @@ import { serialize, deserialize, stringify } from "./utility";
 
 import styles from "./RichTextEditor.module.css";
 
-const RichTextEditor = () => {
+const RichTextEditor = ({ forumId, topicId, token }) => {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
     const [value, setValue] = useState(
         deserialize(localStorage.getItem("content")) || INIT
     );
+
+    const submit = () => {
+        const data = localStorage.getItem("content");
+        console.log(data)
+        axios.post(
+            `/api/forum/${forumId}/topic/${topicId}/reply`,
+            data,
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setValue(INIT)
+    }
 
     return (
         <div className={styles.container}>
@@ -94,11 +106,13 @@ const RichTextEditor = () => {
                     <EmojiIcon className={styles.icon} />
                 </DropDownButton>
                 <div className={styles.submit}>
-                    <SendButton>Submit</SendButton>
+                    <SendButton onClick={() => { submit() }}>Submit</SendButton>
                 </div>
             </div>
         </div>
     );
 };
+
+
 
 export default RichTextEditor;

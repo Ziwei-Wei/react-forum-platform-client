@@ -24,8 +24,15 @@ const logger = store => next => action => {
     return result;
 };
 
+const composeEnhancers =
+    typeof window === 'object' &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+            // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+        }) : compose;
+
 // create enhancers
-const enhancers = compose(applyMiddleware(thunk, logger));
+const enhancers = composeEnhancers(applyMiddleware(thunk, logger));
 
 // application store
 const appStore = createStore(rootReducer, enhancers);

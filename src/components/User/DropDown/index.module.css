@@ -9,8 +9,47 @@
     outline: 0;
 }
 
+.button_panel {
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.toggle_button_on {
+    flex: 1;
+    justify-content: center;
+    color: black;
+    display: flex;
+    border-radius: 50%;
+    background: transparent;
+    border: 0;
+}
+
+.toggle_button_on:focus {
+    outline: 0;
+}
+
+.toggle_button_off {
+    flex: 1;
+    justify-content: center;
+    color: grey;
+    display: flex;
+    border-radius: 50%;
+    background: transparent;
+    border: 0;
+}
+
+.toggle_button_off:focus {
+    outline: 0;
+}
+
 .icon {
     color: white;
     display: block;
     margin: auto;
+}
+
+.auth {
+    margin: 2rem;
 }

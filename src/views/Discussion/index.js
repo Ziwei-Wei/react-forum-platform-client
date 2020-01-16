@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -23,9 +23,10 @@ const Discussion = () => {
     const params = useParams();
     const location = useLocation();
     const dispatch = useDispatch();
-    const discussion = useSelector(state => state.discussion);
+    const discussion = useSelector(state => state.discussion, shallowEqual);
 
     const init = async () => {
+        console.log(location.state)
         dispatch({
             type: INIT_DISCUSSION,
             forumId: location.state.forumId,
@@ -82,11 +83,9 @@ const Discussion = () => {
                     <List items={discussion.replyList} />
                 </div>
             )}
-            {discussion.isLoading === false && (
-                <div className={styles.editor}>
-                    <RichTextEditor />
-                </div>
-            )}
+            <div className={styles.editor}>
+                <RichTextEditor forumId={discussion.forumId} topicId={discussion.topicId} />
+            </div>
         </>
     );
 };

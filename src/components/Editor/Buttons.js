@@ -2,23 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { Editor } from "slate";
 
 import styles from "./Buttons.module.css";
-import axios from "axios";
 
 import PropTypes from "prop-types";
 
-const SendButton = ({ children, forumId, topicId, token }) => {
+const SendButton = ({ children, onClick }) => {
     return (
         <button
             className={styles.button}
-            onClick={event => {
-                event.preventDefault();
-                const data = localStorage.getItem("content");
-                axios.post(
-                    `/api/forum/${forumId}/topic/${topicId}/reply`,
-                    data,
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
-            }}
+            onClick={onClick}
         >
             {children}
         </button>

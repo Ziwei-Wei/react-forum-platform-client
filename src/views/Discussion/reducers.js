@@ -5,7 +5,6 @@ import {
     UPDATE_DISCUSSION_SUCCESS,
     UPDATE_DISCUSSION_FAILURE
 } from "./constants";
-import { act } from "react-dom/test-utils";
 
 const discussionReducer = (state = INITIAL_DISCUSSION_STATE, action) => {
     switch (action.type) {
