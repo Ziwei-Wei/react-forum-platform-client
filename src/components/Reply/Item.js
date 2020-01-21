@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 
 import Content from "components/Content";
 
+import { formatDate } from "utility/utility";
+
 import styles from "components/Reply/Item.module.css";
 
-const Item = ({ user, content, createdAt }) => {
+const Item = ({ user, content, createdAt, now }) => {
     return (
         <div className={styles.container}>
             <div className={styles.title}>
@@ -20,7 +22,9 @@ const Item = ({ user, content, createdAt }) => {
                     ></img>
                     {user.username}
                 </Link>
-                <div className={styles.date}>{createdAt}</div>
+                <div className={styles.date}>
+                    {formatDate(now, new Date(createdAt))}
+                </div>
             </div>
             <div className={styles.content}>
                 <Content data={content} />

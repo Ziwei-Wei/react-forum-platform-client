@@ -31,7 +31,9 @@ const TopicItem = ({
                 <Link
                     className={styles.link}
                     to={{
-                        pathname: `/${forumName}/${fitNameToUrl(name)}`,
+                        pathname: `/forum/${forumName}/topic/${fitNameToUrl(
+                            name
+                        )}`,
                         search: "",
                         hash: "",
                         state: {

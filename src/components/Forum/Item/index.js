@@ -21,7 +21,7 @@ const Item = ({ _id, name, description, category }) => {
                 <Link
                     className={styles.link}
                     to={{
-                        pathname: `/${name}`,
+                        pathname: `/forum/${name}`,
                         search: "",
                         hash: "",
                         state: { forumId: _id }

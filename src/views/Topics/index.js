@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
-import Header from "components/Header";
 import Bulletin from "components/Bulletin";
 import Loading from "components/Loading";
 
@@ -56,7 +55,6 @@ const Topics = () => {
             forumName: params.forumName,
             forumId: location.state.forumId
         });
-        update();
     };
 
     const updateTopics = () => {
@@ -74,23 +72,20 @@ const Topics = () => {
     useEffect(updateTopics, [sortMethod]);
 
     return (
-        <>
-            <Header address={"./" + params.forumName} type="topic" />
-            <div className={styles.container}>
-                <Bulletin />
-                <TopicListController
-                    topicSortMethods={TOPICS_SORT_METHODS}
-                    toggleSortMethod={toggleSortMethod}
-                />
-                {isLoading === true && <Loading />}
-                <TopicList
-                    isLoading={isLoading}
-                    forumName={params.forumName}
-                    forumId={forumId}
-                    items={topicList}
-                />
-            </div>
-        </>
+        <div className={styles.container}>
+            <Bulletin />
+            <TopicListController
+                topicSortMethods={TOPICS_SORT_METHODS}
+                toggleSortMethod={toggleSortMethod}
+            />
+            {isLoading === true && <Loading />}
+            <TopicList
+                isLoading={isLoading}
+                forumName={params.forumName}
+                forumId={forumId}
+                items={topicList}
+            />
+        </div>
     );
 };
 

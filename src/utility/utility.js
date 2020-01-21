@@ -1,8 +1,18 @@
+const createAddress = (forumName, topicName) => {
+    return "./" + fitNameToUrl(forumName) + topicName !== ""
+        ? "/" + fitNameToUrl(topicName)
+        : "";
+};
+
 const fitNameToUrl = name => {
-    return name
-        .replace(/[\s.,'"!?()]+/g, " ")
-        .trim()
-        .replace(/\s+/g, "-");
+    if (name) {
+        return name
+            .replace(/[\s.,'"!?()]+/g, " ")
+            .trim()
+            .replace(/\s+/g, "-");
+    } else {
+        return "";
+    }
 };
 
 const getColor = str => {
@@ -30,20 +40,18 @@ const monthNames = [
     "Dec"
 ];
 
-const formatDate = (now, updatedAt) => {
-    if (now - updatedAt < 8.64e7) {
-        if (now - updatedAt < 3.6e6) {
-            return (now - updatedAt).getMinute().toString();
-        } else {
-            return (now - updatedAt).getHour().toString();
+const formatDate = (now, at) => {
+    if (now - at < 86400000) {
+        if (now - at > 3600000) {
+            return Math.round((now - at) / 3600000) + " h";
         }
+        if (now - at > 60000) {
+            return Math.round((now - at) / 60000) + " min";
+        }
+        return Math.round((now - at) / 1000) + " sec";
     } else {
-        return (
-            monthNames[updatedAt.getMonth()] +
-            " '" +
-            updatedAt.getDay().toString()
-        );
+        return monthNames[at.getMonth()] + " '" + at.getDay().toString();
     }
 };
 
-module.exports = { fitNameToUrl, getColor, formatDate };
+module.exports = { createAddress, fitNameToUrl, getColor, formatDate };

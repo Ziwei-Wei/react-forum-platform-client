@@ -29,7 +29,7 @@ import { serialize, deserialize, stringify } from "./utility";
 
 import styles from "./RichTextEditor.module.css";
 
-const RichTextEditor = ({ forumId, topicId, token }) => {
+const RichTextEditor = ({ forumId, topicId, token, update }) => {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
@@ -37,16 +37,17 @@ const RichTextEditor = ({ forumId, topicId, token }) => {
         deserialize(localStorage.getItem("content")) || INIT
     );
 
-    const submit = () => {
+    const submit = async () => {
         const data = localStorage.getItem("content");
-        console.log(data)
-        axios.post(
+        console.log(data);
+        await axios.post(
             `/api/forum/${forumId}/topic/${topicId}/reply`,
-            data,
+            { content: { children: deserialize(data) } },
             { headers: { Authorization: `Bearer ${token}` } }
         );
-        setValue(INIT)
-    }
+        update();
+        setValue(INIT);
+    };
 
     return (
         <div className={styles.container}>
@@ -106,13 +107,17 @@ const RichTextEditor = ({ forumId, topicId, token }) => {
                     <EmojiIcon className={styles.icon} />
                 </DropDownButton>
                 <div className={styles.submit}>
-                    <SendButton onClick={() => { submit() }}>Submit</SendButton>
+                    <SendButton
+                        onClick={() => {
+                            submit();
+                        }}
+                    >
+                        Submit
+                    </SendButton>
                 </div>
             </div>
         </div>
     );
 };
-
-
 
 export default RichTextEditor;

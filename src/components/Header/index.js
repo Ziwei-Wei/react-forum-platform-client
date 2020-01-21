@@ -1,21 +1,15 @@
 import React from "react";
-import { Form } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-import { MdPlaylistAdd } from "react-icons/md";
 
-import DropDown from "components/User/DropDown";
+import UserAccess from "components/User/Access";
 
 import styles from "./index.module.css";
 
-const Header = ({ user, address, type }) => {
-    if (!user) {
-        user = "visitor";
-    }
-
+const Header = ({ username, address, setToken, accessToken }) => {
     return (
         <div className={styles.background}>
             <nav className={styles.container}>
-                <div className={styles.at}>{user + " @ " + address}</div>
+                <div className={styles.at}>{username + " @ " + address}</div>
                 <div className={styles.search_box}>
                     <FaSearch className={styles.search_icon} />
                     <input
@@ -24,17 +18,22 @@ const Header = ({ user, address, type }) => {
                         placeholder={"find @" + address}
                     />
                 </div>
-                {(type === "topic" || type === "forum") && (
-                    <div className={styles.add}>
-                        <MdPlaylistAdd className={styles.icon} />
-                    </div>
-                )}
                 <div className={styles.user}>
-                    <DropDown />
+                    <UserAccess
+                        username={username}
+                        setToken={setToken}
+                        accessToken={accessToken}
+                    />
                 </div>
             </nav>
         </div>
     );
+};
+
+Header.defaultProps = {
+    username: "visitor",
+    address: "./",
+    accessToken: ""
 };
 
 export default Header;

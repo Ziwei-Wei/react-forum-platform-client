@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import { shallowEqual, useSelector, useDispatch } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 import Title from "components/Topic/Title";
 import List from "components/Reply/List";
-import Header from "components/Header";
 import Loading from "components/Loading";
 
 import RichTextEditor from "components/Editor/RichTextEditor";
@@ -20,36 +19,50 @@ import {
 } from "./constants";
 
 const Discussion = () => {
-    const params = useParams();
     const location = useLocation();
     const dispatch = useDispatch();
-    const discussion = useSelector(state => state.discussion, shallowEqual);
+    const [trigger, fire] = useState(Date());
+    const forumId = useSelector(state => state.discussion.forumId);
+    const topicId = useSelector(state => state.discussion.topicId);
+    const title = useSelector(state => state.discussion.title);
+    const category = useSelector(state => state.discussion.category);
+    const updatedAt = useSelector(state => state.discussion.updatedAt);
+    const replyList = useSelector(state => state.discussion.replyList);
+    const isLoading = useSelector(state => state.discussion.isLoading);
+    const tags = useSelector(state => state.discussion.tags);
+    const accessToken = useSelector(state => state.app.accessToken);
 
-    const init = async () => {
-        console.log(location.state)
+    const initDiscussion = async () => {
         dispatch({
             type: INIT_DISCUSSION,
             forumId: location.state.forumId,
             topicId: location.state.topicId
         });
-        await update();
     };
 
-    const update = async () => {
+    const updateDiscussion = async () => {
         try {
-            dispatch({ type: UPDATE_DISCUSSION_START });
+            dispatch({
+                type: UPDATE_DISCUSSION_START
+            });
 
             const replies = await axios.get(
                 `/api/forum/${location.state.forumId}/topic/${location.state.topicId}/reply`
             );
 
+            const topic = await axios.get(
+                `/api/forum/${location.state.forumId}/topic/${location.state.topicId}`
+            );
+
+            console.log(replies);
+
             dispatch({
                 type: UPDATE_DISCUSSION_SUCCESS,
                 replyList: replies.data,
-                title: location.state.title,
-                category: location.state.category,
-                tags: location.state.tags,
-                updatedAt: location.state.updatedAt
+                title: topic.data.name,
+                category: topic.data.category,
+                tags: topic.data.tags,
+                updatedAt: topic.data.updatedAt
             });
         } catch (error) {
             dispatch({
@@ -59,32 +72,41 @@ const Discussion = () => {
         }
     };
 
-    const initDiscussion = () => {
-        init();
+    const init = () => {
+        initDiscussion();
     };
 
-    useEffect(initDiscussion, []);
+    const update = () => {
+        updateDiscussion();
+    };
+
+    useEffect(init, []);
+    useLayoutEffect(update, [trigger]);
 
     return (
         <>
-            <Header
-                address={"./" + params.forumName + "/" + params.topicName}
-            />
-            {discussion.isLoading === true && <Loading />}
-            {discussion.isLoading === false && (
+            {isLoading === true && <Loading />}
+            {isLoading === false && (
                 <div className={styles.title}>
                     <Title
-                        forumId={discussion.forumId}
-                        title={discussion.title}
-                        category={discussion.category}
-                        tags={discussion.tags}
-                        updatedAt={discussion.updatedAt}
+                        forumId={forumId}
+                        title={title}
+                        category={category}
+                        tags={tags}
+                        updatedAt={updatedAt}
                     />
-                    <List items={discussion.replyList} />
+                    <List items={replyList} />
                 </div>
             )}
             <div className={styles.editor}>
-                <RichTextEditor forumId={discussion.forumId} topicId={discussion.topicId} />
+                <RichTextEditor
+                    forumId={forumId}
+                    topicId={topicId}
+                    token={accessToken}
+                    update={() => {
+                        fire(Date());
+                    }}
+                />
             </div>
         </>
     );

@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
-import Header from "components/Header";
 import Bulletin from "components/Bulletin";
 import Loading from "components/Loading";
 
@@ -28,6 +27,13 @@ const Forums = () => {
     const forumList = useSelector(state => state.forums.forumList);
     const isLoading = useSelector(state => state.forums.isLoading);
 
+    const toggleSortMethod = newMethod => {
+        dispatch({
+            type: TOGGLE_FORUMS_SORTING_METHOD,
+            sortingMethod: newMethod
+        });
+    };
+
     const update = async () => {
         try {
             dispatch({ type: UPDATE_FORUMS_START });
@@ -48,37 +54,22 @@ const Forums = () => {
         }
     };
 
-    const initForums = () => {
-        update();
-    };
-
     const updateForums = () => {
         update();
     };
 
-    const toggleSortMethod = newMethod => {
-        dispatch({
-            type: TOGGLE_FORUMS_SORTING_METHOD,
-            sortingMethod: newMethod
-        });
-    };
-
-    useEffect(initForums, []);
-    useEffect(updateForums, [sortingMethod]);
+    useLayoutEffect(updateForums, [sortingMethod]);
 
     return (
-        <>
-            <Header address={"./"} type="forum" />
-            <div className={styles.container}>
-                <Bulletin />
-                <ForumListController
-                    forumSortMethods={FORUMS_SORTING_METHODS.name}
-                    toggleSortMethod={toggleSortMethod}
-                />
-                {isLoading === true && <Loading />}
-                <ForumList isLoading={isLoading} forums={forumList} />
-            </div>
-        </>
+        <div className={styles.container}>
+            <Bulletin />
+            <ForumListController
+                forumSortMethods={FORUMS_SORTING_METHODS.name}
+                toggleSortMethod={toggleSortMethod}
+            />
+            {isLoading === true && <Loading />}
+            <ForumList isLoading={isLoading} forums={forumList} />
+        </div>
     );
 };
 

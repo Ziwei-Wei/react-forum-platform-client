@@ -6,7 +6,7 @@ import { formatDate } from "utility/utility";
 
 import styles from "components/Reply/List.module.css";
 
-const List = ({ items }) => {
+const List = ({ isLoading, items }) => {
     const [now, setNow] = useState();
 
     useEffect(() => {
@@ -14,16 +14,20 @@ const List = ({ items }) => {
     }, []);
 
     return (
-        <div className={styles.container}>
-            {items.map(item => {
-                item.createdAt = formatDate(now, new Date(item.createdAt));
-                return <Item {...item} />;
-            })}
-        </div>
+        <>
+            {isLoading === false && (
+                <div className={styles.container}>
+                    {items.map(item => {
+                        return <Item {...item} now={now} />;
+                    })}
+                </div>
+            )}
+        </>
     );
 };
 
 List.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
     replies: PropTypes.arrayOf(
         PropTypes.shape({
             user: PropTypes.object.isRequired,
@@ -32,4 +36,10 @@ List.propTypes = {
         }).isRequired
     ).isRequired
 };
+
+List.defaultProps = {
+    isLoading: false,
+    replies: []
+};
+
 export default List;
