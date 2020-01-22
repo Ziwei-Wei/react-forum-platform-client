@@ -32,10 +32,12 @@ const Bulletin = () => {
     return (
         <div className={styles.container}>
             <div className={styles.item}>
-                <Content data={defaultData} />
+                <Content node={defaultData} />
             </div>
         </div>
     );
 };
 
 export default Bulletin;
+
+

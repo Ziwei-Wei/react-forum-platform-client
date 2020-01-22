@@ -1,28 +1,35 @@
-import escapeHtml from "escape-html";
-import parse from "html-react-parser";
+//import parse from "html-react-parser";
+import React from "react";
 import { Text } from "slate";
+import escapeHtml from "escape-html";
+import { format } from "components/Editor/utility"
+import { Leaf } from "components/Editor/Leaf"
+import { Element } from "components/Editor/Element"
 
-const serialize = node => {
-    if (Text.isText(node)) {
-        return escapeHtml(node.text);
+
+const Content = ({ node }) => {
+
+    let children = <></>
+    if (node.children) {
+        console.log("children")
+        console.log(node)
+        children = <span className="this-one">{node.children.map(child => {
+            console.log("child")
+            console.log(child)
+            return <Content node={child} />
+        })}</span>
     }
 
-    const children = node.children.map(n => serialize(n)).join("");
 
-    switch (node.type) {
-        case "quote":
-            return `<blockquote><p>${children}</p></blockquote>`;
-        case "paragraph":
-            return `<p>${children}</p>`;
-        case "link":
-            return `<a href="${escapeHtml(node.url)}">${children}</a>`;
-        default:
-            return children;
+    if (!node.text) {
+        console.log("element")
+        console.log(node)
+        console.log("------")
+        return <Element attributes={node.attributes} children={children} element={node} />
+    } else {
+        return <Leaf attributes={node.attributes} children={node.text} leaf={node} />
     }
-};
 
-const Content = ({ data }) => {
-    return parse(serialize(data));
-};
+}
 
 export default Content;

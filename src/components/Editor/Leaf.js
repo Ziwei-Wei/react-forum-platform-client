@@ -2,6 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Leaf = ({ attributes, children, leaf }) => {
+  return <span {...attributes}>{formatLeaf(leaf, children)}</span>;
+};
+
+const formatLeaf = (leaf, children) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
@@ -14,8 +18,9 @@ const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
-  return <span {...attributes}>{children}</span>;
-};
+
+  return children
+}
 
 Leaf.propTypes = {
   attributes: PropTypes.object.isRequired,
@@ -28,4 +33,4 @@ Leaf.propTypes = {
   }).isRequired
 };
 
-export default Leaf;
+export { Leaf, formatLeaf };

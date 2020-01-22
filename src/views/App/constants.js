@@ -13,7 +13,7 @@ export const INITIAL_APP_STATE = {
     username: "TomCat",
     password: "TomCat",
     accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGZlNzYxYjA3NzMwN2YzMGVkNmU1ZSIsImlhdCI6MTU3OTQwNTUwNSwiZXhwIjoxNTc5NDE5OTA1fQ.OUTaM0GYZdvEhM95nNCJihrvhLa3dvkNbipZ4yIhO9E",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGZlNzYxYjA3NzMwN2YzMGVkNmU1ZSIsImlhdCI6MTU3OTY5MDAxMywiZXhwIjoxNTc5NzA0NDEzfQ.OfP7kOSg11UGSx0Q3I5bK_mHErw_aPKF4lfETyaBLUA",
     address: "",
     forumName: "",
     forumId: "",

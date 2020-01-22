@@ -3,7 +3,7 @@ a rich text editor based on slate
 */
 import React, { useMemo, useState, useCallback } from "react";
 import axios from "axios";
-import { createEditor } from "slate";
+import { createEditor, Transforms } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import isHotkey from "is-hotkey";
@@ -19,8 +19,8 @@ import {
 
 import { HOTKEYS, INIT } from "./constants";
 
-import Element from "./Element";
-import Leaf from "./Leaf";
+import { Element } from "./Element";
+import { Leaf } from "./Leaf";
 import { toggleMark } from "./controller";
 import { MarkToggle, BlockToggle } from "./Toggles";
 import { ClearMarkButton, DropDownButton, SendButton } from "./Buttons";
@@ -34,7 +34,8 @@ const RichTextEditor = ({ forumId, topicId, token, update }) => {
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
     const [value, setValue] = useState(
-        deserialize(localStorage.getItem("content")) || INIT
+        deserialize(localStorage.getItem("content")) ||
+        INIT
     );
 
     const submit = async () => {
@@ -46,7 +47,8 @@ const RichTextEditor = ({ forumId, topicId, token, update }) => {
             { headers: { Authorization: `Bearer ${token}` } }
         );
         update();
-        setValue(INIT);
+        Transforms.deselect(editor)
+        setValue(INIT)
     };
 
     return (
@@ -76,7 +78,6 @@ const RichTextEditor = ({ forumId, topicId, token, update }) => {
                                 }
                             }
                         }}
-                        on
                     />
                 </Slate>
             </div>

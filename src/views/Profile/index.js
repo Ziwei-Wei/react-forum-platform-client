@@ -30,8 +30,6 @@ const Profile = () => {
         try {
             dispatch({ type: UPDATE_USER_START });
 
-            console.log(params);
-
             const res = await axios.get(`/api/user/${params.username}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });

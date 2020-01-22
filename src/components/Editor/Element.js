@@ -12,6 +12,17 @@ const Element = ({ attributes, children, element }) => {
   }
 };
 
+const formatElement = (children, element) => {
+  switch (element.type) {
+    case "bulleted-list":
+      return <ul>{children}</ul>;
+    case "numbered-list":
+      return <ol>{children}</ol>;
+    default:
+      return <p>{children}</p>;
+  }
+}
+
 Element.propTypes = {
   attributes: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired,
@@ -20,4 +31,4 @@ Element.propTypes = {
   }).isRequired
 };
 
-export default Element;
+export { Element, formatElement };

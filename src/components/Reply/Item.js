@@ -27,7 +27,7 @@ const Item = ({ user, content, createdAt, now }) => {
                 </div>
             </div>
             <div className={styles.content}>
-                <Content data={content} />
+                <Content node={content} />
             </div>
         </div>
     );
