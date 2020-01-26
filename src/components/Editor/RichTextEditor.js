@@ -3,7 +3,7 @@ a rich text editor based on slate
 */
 import React, { useMemo, useState, useCallback } from "react";
 import axios from "axios";
-import { createEditor, Transforms } from "slate";
+import { createEditor, Transforms, Editor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import isHotkey from "is-hotkey";
@@ -104,7 +104,10 @@ const RichTextEditor = ({ forumId, topicId, token, update }) => {
                     <ClearIcon className={styles.icon} />
                 </ClearMarkButton>
                 <div className={styles.separator} />
-                <DropDownButton content={Emoji}>
+                <DropDownButton content={Emoji} onPicked={emoji => {
+                    Editor.insertText(editor, emoji.native)
+                    console.log(emoji.native);
+                }}>
                     <EmojiIcon className={styles.icon} />
                 </DropDownButton>
                 <div className={styles.submit}>

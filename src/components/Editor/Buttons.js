@@ -38,9 +38,10 @@ ClearMarkButton.propTypes = {
     children: PropTypes.func.isRequired
 };
 
-const DropDownButton = ({ children, content }) => {
+const DropDownButton = ({ children, content, onPicked }) => {
     const [state, setState] = useState(false);
     const buttonRef = useRef(null);
+    const dropdownRef = useRef(null);
     const Content = content;
 
     const handleOnClick = () => {
@@ -58,7 +59,7 @@ const DropDownButton = ({ children, content }) => {
     };
 
     const handleClickOutside = event => {
-        if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+        if ((buttonRef.current && !buttonRef.current.contains(event.target)) && (dropdownRef.current && !dropdownRef.current.contains(event.target))) {
             setState(false);
         }
     };
@@ -71,7 +72,7 @@ const DropDownButton = ({ children, content }) => {
     });
 
     return (
-        <>
+        <div>
             <button
                 className={styles.icon_button}
                 active={state}
@@ -80,8 +81,8 @@ const DropDownButton = ({ children, content }) => {
             >
                 {children}
             </button>
-            <div className={styles.dropdown}>{state ? <Content /> : ""}</div>
-        </>
+            <div ref={dropdownRef} className={styles.dropdown}>{state ? <Content onPicked={onPicked} /> : ""}</div>
+        </div>
     );
 };
 

@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 
-const Emoji = ({ addEmoji }) => {
+const Emoji = ({ onPicked }) => {
   return (
     <Picker
       title=""
       emoji="yum"
       native={true}
-      onClick={addEmoji}
+      onSelect={onPicked}
       style={{ width: "365px" }}
     />
   );
