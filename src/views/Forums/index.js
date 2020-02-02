@@ -8,6 +8,8 @@ import Loading from "components/Loading";
 import ForumList from "components/Forum/List";
 import ForumListController from "components/Forum/ListController";
 
+import ForumToolBar from "components/Modal/ForumToolBar"
+
 import styles from "./index.module.css";
 
 import {
@@ -26,6 +28,7 @@ const Forums = () => {
     const sortingMethod = useSelector(state => state.forums.sortingMethod);
     const forumList = useSelector(state => state.forums.forumList);
     const isLoading = useSelector(state => state.forums.isLoading);
+    const accessToken = useSelector(state => state.app.accessToken);
 
     const toggleSortMethod = newMethod => {
         dispatch({
@@ -63,6 +66,7 @@ const Forums = () => {
     return (
         <div className={styles.container}>
             <Bulletin />
+            <ForumToolBar url={`/api/forum`} accessToken={accessToken} />
             <ForumListController
                 forumSortMethods={FORUMS_SORTING_METHODS.name}
                 toggleSortMethod={toggleSortMethod}
