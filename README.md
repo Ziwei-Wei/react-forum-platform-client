@@ -15,6 +15,8 @@
 ![](snapshots/login.png)
 ### create topic modal
 ![](snapshots/create.png)
+### edit bulletin as admin of forum
+![](snapshots/edit_bulletin.png)
 
 ### To Run the project you have to start the backend first
 
