@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import HeaderBar from "components/Header";
 
@@ -9,23 +10,14 @@ import { UPDATE_APP_AUTH } from "views/App/constants";
 
 const Header = () => {
     const dispatch = useDispatch();
-    const [address, setAddress] = useState("./");
-    const forumName = useSelector(state => state.app.forumName, shallowEqual);
-    const topicName = useSelector(state => state.app.topicName, shallowEqual);
+    const location = useLocation();
     const username = useSelector(state => state.app.username, shallowEqual);
-    const accessToken = useSelector(
-        state => state.app.accessToken,
-        shallowEqual
-    );
-
-    useEffect(() => {
-        setAddress(createAddress(forumName, topicName));
-    }, [forumName, topicName, username]);
+    const accessToken = useSelector(state => state.app.accessToken);
 
     return (
         <HeaderBar
             username={username}
-            address={address}
+            address={location.pathname.replace(/(\/forum)|(\/topic)/g, "")}
             setToken={(username, password, accessToken) => {
                 dispatch({
                     type: UPDATE_APP_AUTH,

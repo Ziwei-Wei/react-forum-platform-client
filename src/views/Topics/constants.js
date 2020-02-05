@@ -1,9 +1,6 @@
 /*
 action types 
 */
-
-export const INIT_TOPICS = "init_topics";
-
 export const UPDATE_TOPICS_START = "update_topics_start";
 export const UPDATE_TOPICS_SUCCESS = "update_topics_success";
 export const UPDATE_TOPICS_FAILURE = "update_topics_failure";
@@ -34,8 +31,6 @@ initial state
 */
 
 export const INITIAL_TOPICS_STATE = {
-    forumName: null,
-    forumId: null,
     topicList: [],
     sortMethod: TOPICS_SORT_METHODS.name.asc,
     isLoading: true,

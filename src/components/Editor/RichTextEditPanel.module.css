@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border: solid 1px grey;
+    padding: 0.5rem;
+}
+
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    font-size: x-large;
+}
+
+.separator {
+    width: 1px;
+    height: 1rem;
+    margin: 0 0.625rem;
+    background-color: lightgrey;
+}
+
+.editor {
+    position: relative;
+    overflow: hidden;
+}
+
+.icon {
+    display: block;
+    margin: auto;
+}
+
+.submit {
+    font-size: medium;
+    margin-left: auto;
+}

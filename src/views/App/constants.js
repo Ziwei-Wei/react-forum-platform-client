@@ -10,13 +10,13 @@ initial state
 */
 
 export const INITIAL_APP_STATE = {
-    username: "TomCat",
+    username: "tomcat",
     password: "TomCat",
     accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGZlNzYxYjA3NzMwN2YzMGVkNmU1ZSIsImlhdCI6MTU3OTY5MDAxMywiZXhwIjoxNTc5NzA0NDEzfQ.OfP7kOSg11UGSx0Q3I5bK_mHErw_aPKF4lfETyaBLUA",
-    address: "",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMzc5YWQxY2M5M2MwNTNjMDdlZWY0ZCIsImlhdCI6MTU4MDcwMzU4NywiZXhwIjoxNTgwNzE3OTg3fQ.5U1wzo95l_wUpAwH8plU9MwJb2H_7S6K7btobIS-WDM",
+    isAdmin: false,
     forumName: "",
     forumId: "",
     topicName: "",
-    topicId: ""
+    topicId: "",
 };

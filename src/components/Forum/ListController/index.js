@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 
 import styles from "./index.module.css";
@@ -6,9 +6,6 @@ import styles from "./index.module.css";
 const ListController = ({ forumSortMethods, toggleSortMethod }) => {
     const [forumSort, setForumSort] = useState("");
 
-    const afterSwitch = () => {
-        toggleSortMethod(forumSort);
-    };
 
     const switchForumSort = () => {
         switch (forumSort) {
@@ -22,11 +19,8 @@ const ListController = ({ forumSortMethods, toggleSortMethod }) => {
                 setForumSort(forumSortMethods.des);
                 break;
         }
+        toggleSortMethod(forumSort);
     };
-
-    useEffect(() => {
-        afterSwitch();
-    }, [forumSort]);
 
     return (
         <div className={styles.container}>

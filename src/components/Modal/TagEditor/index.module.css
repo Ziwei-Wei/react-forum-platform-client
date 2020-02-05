@@ -1,0 +1,20 @@
+.input{
+    width: 100%;
+    padding-left: 1rem;
+    border: none;
+}
+
+.input:focus{
+    outline: none;
+}
+
+.dot {
+    align-self: center;
+
+}
+
+.container{
+    display: flex;
+    margin-bottom: 1rem;
+    border-bottom: solid 1px grey;
+}

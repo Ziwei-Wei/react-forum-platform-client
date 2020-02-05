@@ -8,7 +8,7 @@ import Loading from "components/Loading";
 import ForumList from "components/Forum/List";
 import ForumListController from "components/Forum/ListController";
 
-import ForumToolBar from "components/Modal/ForumToolBar"
+import ForumToolBar from "components/Forum/ForumToolBar"
 
 import styles from "./index.module.css";
 
@@ -35,9 +35,10 @@ const Forums = () => {
             type: TOGGLE_FORUMS_SORTING_METHOD,
             sortingMethod: newMethod
         });
+        update()
     };
 
-    const update = async () => {
+    const updateForums = async () => {
         try {
             dispatch({ type: UPDATE_FORUMS_START });
 
@@ -57,16 +58,24 @@ const Forums = () => {
         }
     };
 
-    const updateForums = () => {
-        update();
+    const update = () => {
+        updateForums();
     };
 
-    useLayoutEffect(updateForums, [sortingMethod]);
+    const webFrontPage = [
+        {
+            type: "paragraph",
+            children: [{ text: "home" }]
+        }
+    ];
+
+
+    useEffect(update, [])
 
     return (
         <div className={styles.container}>
-            <Bulletin />
-            <ForumToolBar url={`/api/forum`} accessToken={accessToken} />
+            <Bulletin value={webFrontPage} />
+            <ForumToolBar url={`/api/forum`} accessToken={accessToken} onNewForum={update} />
             <ForumListController
                 forumSortMethods={FORUMS_SORTING_METHODS.name}
                 toggleSortMethod={toggleSortMethod}

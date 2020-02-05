@@ -1,0 +1,29 @@
+.container {
+    height: 1.75rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: solid 1px;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    padding: 0.25rem;
+    color: grey;
+}
+
+.container> * {
+    margin: 0rem 0.25rem;
+}
+
+.button {
+    color: grey;
+    display: flex;
+    background: none;
+    border: none;
+    padding: 0rem;
+    margin-left: 0rem 0.25rem;
+}
+
+.button:focus {
+    outline: none;
+}

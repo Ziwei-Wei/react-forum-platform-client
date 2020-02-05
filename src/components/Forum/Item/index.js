@@ -6,7 +6,7 @@ import { getColor } from "utility/utility";
 
 import styles from "./index.module.css";
 
-const Item = ({ _id, name, description, category }) => {
+const Item = ({ _id, name, description, category, admin }) => {
     const indexIconStyle = {
         display: "inline-block",
         borderRadius: "50%",
@@ -24,7 +24,7 @@ const Item = ({ _id, name, description, category }) => {
                         pathname: `/forum/${name}`,
                         search: "",
                         hash: "",
-                        state: { forumId: _id }
+                        state: { forumId: _id, forumAdmin: admin.username }
                     }}
                 >
                     {name}
@@ -46,7 +46,8 @@ Item.propTypes = {
     description: PropTypes.string.isRequired,
     category: PropTypes.shape({
         name: PropTypes.string.isRequired
-    })
+    }),
+    admin: PropTypes.string.isRequired
 };
 
 export default Item;

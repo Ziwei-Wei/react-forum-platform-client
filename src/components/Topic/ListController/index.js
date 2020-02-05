@@ -6,10 +6,6 @@ import styles from "./index.module.css";
 const Toggle = ({ name, topicSortMethods, toggleSortMethod }) => {
     const [topicSort, setTopicSort] = useState("");
 
-    const afterSwitch = () => {
-        toggleSortMethod(topicSort);
-    };
-
     const switchTopicSort = () => {
         switch (topicSort) {
             case topicSortMethods.asc:
@@ -22,11 +18,9 @@ const Toggle = ({ name, topicSortMethods, toggleSortMethod }) => {
                 setTopicSort(topicSortMethods.des);
                 break;
         }
+        toggleSortMethod(topicSort);
     };
 
-    useEffect(() => {
-        afterSwitch();
-    }, [topicSort]);
 
     return (
         <>

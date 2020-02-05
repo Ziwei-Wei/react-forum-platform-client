@@ -2,19 +2,23 @@ import React from "react";
 
 import { MdClear } from "react-icons/md"
 
+import styles from "./index.module.css"
+
 /**
  * Tag is a colored small panel that shows some text or icon
  */
 const Tag = ({ children, id, onDelete }) => {
 
-    const handleDelete = () => {
+    const handleDelete = event => {
+        console.log("button")
+        event.preventDefault()
         onDelete(id)
     }
 
     return (
-        <div>
+        <div className={styles.container}>
             {children}
-            <button onClick={handleDelete}><MdClear /></button>
+            <button className={styles.button} type="button" onClick={handleDelete}><MdClear /></button>
         </div>
     )
 }

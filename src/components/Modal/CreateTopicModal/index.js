@@ -2,7 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 
 import axios from "axios"
 
+import { HOTKEYS, INIT } from "components/Editor/constants";
+
 import TagEditor from "components/Modal/TagEditor"
+import TagPoolEditor from "components/Modal/TagPoolEditor"
+import RichTextEditPanel from "components/Editor/RichTextEditPanel"
 
 import styles from "./index.module.css"
 
@@ -28,35 +32,53 @@ function useOutsideAlerter(ref, action) {
  */
 const CreateForumModal = ({ url, accessToken, visibility, onHide, onSubmit }) => {
     const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
+    const [tags, setTags] = useState([])
+    const [content, setContent] = useState(INIT);
 
     const formRef = useRef()
     useOutsideAlerter(formRef, onHide)
 
-    const handleNameChange = (event) => {
+    const handleAddOneTag = tag => {
+        if (!tags.includes(tag)) {
+            setTags([...tags, tag].sort())
+        }
+    }
+    const handleDeleteOneTag = id => {
+        setTags(tags.filter((_, index) => (index != id)))
+    }
+
+    const handleNameChange = event => {
         setName(event.target.value)
     }
 
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value)
-    }
-
-    const handleCategoryChange = (event) => {
+    const handleCategoryChange = event => {
         setCategory(event.target.value)
     }
 
-    const handleSubmit = async (event) => {
+    const handleContentChange = value => {
+        setContent(value)
+    }
+
+    const handleSubmit = async event => {
         event.preventDefault();
         try {
+            console.log({
+                topicName: name,
+                category: category,
+                tags: tags,
+                content: content
+            })
             await axios.post(url, {
-                name: name,
-                description: description,
-                category: category
+                topicName: name,
+                category: category,
+                tags: tags,
+                content: { children: content },
             }, { headers: { Authorization: `Bearer ${accessToken}` } })
             setName("")
-            setDescription("")
             setCategory("")
+            setTags([])
+            setContent(INIT)
             onSubmit()
         } catch (error) {
             console.error(error)
@@ -70,10 +92,12 @@ const CreateForumModal = ({ url, accessToken, visibility, onHide, onSubmit }) =>
                     <div className={styles.modal} ref={formRef} >
                         <label className={styles.item} >Name: </label>
                         <input className={styles.input} type="text" value={name} onChange={handleNameChange} />
-                        <label className={styles.item} >Description: </label>
-                        <input className={styles.input} type="text" value={description} onChange={handleDescriptionChange} />
                         <label className={styles.item} >Category: </label>
                         <TagEditor value={category} onChange={handleCategoryChange} />
+                        <label className={styles.item} >Tags: </label>
+                        <TagPoolEditor value={tags} addOne={handleAddOneTag} deleteOne={handleDeleteOneTag} />
+                        <label className={styles.item} >Content: </label>
+                        <RichTextEditPanel value={content} onChange={handleContentChange} />
                         <button className={styles.button} onClick={handleSubmit} type="button"> Create </button>
                     </div>
                 </div>

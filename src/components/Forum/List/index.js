@@ -24,7 +24,8 @@ List.propTypes = {
             description: PropTypes.string.isRequired,
             category: PropTypes.shape({
                 name: PropTypes.string.isRequired
-            })
+            }),
+            admin: PropTypes.string.isRequired
         }).isRequired
     ).isRequired
 };

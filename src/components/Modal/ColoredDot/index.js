@@ -3,7 +3,7 @@ import React from "react";
 /**
  * Tag is a colored small panel that shows some text or icon
  */
-const ColoredDot = ({ color }) => {
+const ColoredDot = ({ color, className }) => {
     const indexIconStyle = {
         display: "inline-block",
         borderRadius: "50%",
@@ -13,7 +13,7 @@ const ColoredDot = ({ color }) => {
     };
 
     return (
-        <span style={indexIconStyle} />
+        <span className={className} style={indexIconStyle} />
     )
 }
 

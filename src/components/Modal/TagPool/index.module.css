@@ -1,0 +1,7 @@
+.tag_pool{
+    width: 100%;
+    min-height: 4rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import TagPool from "components/Modal/TagPool"
+
+import styles from "./index.module.css"
 
 /**
  * An editor that used to edit(add/remove) collection of element
  */
-const TagPoolEditor = ({ tags, deleteOne, addOne }) => {
+const TagPoolEditor = ({ value, deleteOne, addOne }) => {
     const [tag, setTag] = useState("")
 
 
@@ -22,8 +24,8 @@ const TagPoolEditor = ({ tags, deleteOne, addOne }) => {
 
     return (
         <div>
-            <input value={tag} onChange={handleCategoryChange} onKeyDown={handleKeyDown} />
-            <TagPool tags={tags} deleteOne={deleteOne} />
+            <TagPool tags={value} deleteOne={deleteOne} />
+            <input className={styles.input} value={tag} onChange={handleCategoryChange} onKeyDown={handleKeyDown} />
         </div>
     )
 }

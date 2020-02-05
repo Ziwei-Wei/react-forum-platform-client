@@ -1,5 +1,4 @@
 import {
-    INIT_TOPICS,
     INITIAL_TOPICS_STATE,
     UPDATE_TOPICS_START,
     UPDATE_TOPICS_SUCCESS,
@@ -9,12 +8,6 @@ import {
 
 const topicsReducer = (state = INITIAL_TOPICS_STATE, action) => {
     switch (action.type) {
-        case INIT_TOPICS:
-            return {
-                ...state,
-                forumId: action.forumId,
-                forumName: action.forumName
-            };
         case UPDATE_TOPICS_START:
             return {
                 ...state,

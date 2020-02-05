@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import Title from "components/Topic/Title";
@@ -12,32 +12,41 @@ import RichTextEditor from "components/Editor/RichTextEditor";
 import styles from "./index.module.css";
 
 import {
-    INIT_DISCUSSION,
     UPDATE_DISCUSSION_START,
     UPDATE_DISCUSSION_SUCCESS,
     UPDATE_DISCUSSION_FAILURE
 } from "./constants";
 
+import {
+    UPDATE_APP_ADDRESS,
+} from "views/App/constants";
+
 const Discussion = () => {
+    const params = useParams();
     const location = useLocation();
     const dispatch = useDispatch();
-    const [trigger, fire] = useState(Date());
-    const forumId = useSelector(state => state.discussion.forumId);
-    const topicId = useSelector(state => state.discussion.topicId);
+
+    const forumId = useSelector(state => state.app.forumId);
+    const topicId = useSelector(state => state.app.topicId);
+    const accessToken = useSelector(state => state.app.accessToken);
+
     const title = useSelector(state => state.discussion.title);
     const category = useSelector(state => state.discussion.category);
     const updatedAt = useSelector(state => state.discussion.updatedAt);
     const replyList = useSelector(state => state.discussion.replyList);
     const isLoading = useSelector(state => state.discussion.isLoading);
     const tags = useSelector(state => state.discussion.tags);
-    const accessToken = useSelector(state => state.app.accessToken);
 
-    const initDiscussion = async () => {
+    const initDiscussion = () => {
         dispatch({
-            type: INIT_DISCUSSION,
+            type: UPDATE_APP_ADDRESS,
+            isAdmin: false,
+            forumName: params.forumName,
             forumId: location.state.forumId,
+            topicName: params.topicName,
             topicId: location.state.topicId
-        });
+        })
+        updateDiscussion()
     };
 
     const updateDiscussion = async () => {
@@ -81,7 +90,6 @@ const Discussion = () => {
     };
 
     useEffect(init, []);
-    useLayoutEffect(update, [trigger]);
 
     return (
         <>
@@ -103,9 +111,7 @@ const Discussion = () => {
                     forumId={forumId}
                     topicId={topicId}
                     token={accessToken}
-                    update={() => {
-                        fire(Date());
-                    }}
+                    update={update}
                 />
             </div>
         </>
