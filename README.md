@@ -1,3 +1,21 @@
+
+
+# Some demo screen shots:
+### forums page ./
+![](snapshots/forums.png)
+### topics page ./pets
+![](snapshots/topics.png)
+### discussion page ./pets/Which-dog-lover-lives-in-LA
+![](snapshots/discussion.png)
+### profile page ./user/tomcat
+![](snapshots/profile.png)
+### signup modal
+![](snapshots/signup.png)
+### login modal
+![](snapshots/login.png)
+### create topic modal
+![](snapshots/create.png)
+
 ### To Run the project you have to start the backend first
 
 ## Available Scripts
