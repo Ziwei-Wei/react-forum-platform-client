@@ -41,10 +41,10 @@ const UserAccess = ({ username, setToken, accessToken }) => {
                     <FaUser className={styles.icon} />
                 </button>
             ) : (
-                <Link to={`/user/${username}`}>
-                    <FaUser className={styles.icon} />
-                </Link>
-            )}
+                    <Link to={`/user/${username}`}>
+                        <FaUser className={styles.icon} />
+                    </Link>
+                )}
         </>
     );
 
@@ -60,13 +60,13 @@ const UserAccess = ({ username, setToken, accessToken }) => {
                             SingIn
                         </button>
                     ) : (
-                        <button
-                            className={styles.toggle_button_off}
-                            onClick={switchState}
-                        >
-                            SingIn
+                            <button
+                                className={styles.toggle_button_off}
+                                onClick={switchState}
+                            >
+                                SingIn
                         </button>
-                    )}
+                        )}
                     {isSignIn ? (
                         <button
                             className={styles.toggle_button_on}
@@ -75,13 +75,13 @@ const UserAccess = ({ username, setToken, accessToken }) => {
                             SignUp
                         </button>
                     ) : (
-                        <button
-                            className={styles.toggle_button_off}
-                            onClick={switchState}
-                        >
-                            SignUp
+                            <button
+                                className={styles.toggle_button_off}
+                                onClick={switchState}
+                            >
+                                SignUp
                         </button>
-                    )}
+                        )}
                 </div>
                 {isLogin && (
                     <div className={styles.auth}>

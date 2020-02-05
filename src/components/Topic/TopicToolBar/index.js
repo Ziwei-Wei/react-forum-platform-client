@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 
 import CreateTopicModal from "components/Modal/CreateTopicModal"
 import { MdPlaylistAdd } from "react-icons/md"
+import axios from "axios";
+
 
 import styles from "./index.module.css"
 
@@ -16,9 +18,14 @@ const TopicToolBar = ({ url, accessToken, onSubmit }) => {
                 accessToken={accessToken}
                 visibility={visibility}
                 onHide={() => { setVisibility(false) }}
-                onSubmit={() => {
-                    setVisibility(false)
-                    onSubmit()
+                onSubmit={async () => {
+                    try {
+                        await axios.get(url);
+                        onSubmit()
+                        setVisibility(false)
+                    } catch (error) {
+                        console.log(error)
+                    }
                 }}
             />
         </div>

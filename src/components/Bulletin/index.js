@@ -12,12 +12,11 @@ const DEFAULT = [
     }
 ];
 
-const Bulletin = ({ value, isEditable }) => {
+const Bulletin = ({ value, isEditable, onSubmit, onChange }) => {
     const [isEditing, setIsEditing] = useState(false)
-    const [content, setContent] = useState(value || DEFAULT);
 
     const handleContentChange = value => {
-        setContent(value)
+        onChange(value)
     }
 
     const startEditing = () => {
@@ -26,26 +25,28 @@ const Bulletin = ({ value, isEditable }) => {
 
     const endEditing = () => {
         setIsEditing(false)
+        onSubmit()
     }
 
     useEffect(() => {
-        console.log(content)
+        if (value == null || value == undefined) {
+            onChange(DEFAULT)
+        }
     }, [])
 
     return (
         <div className={styles.container}>
             <div className={styles.item}>
-                {isEditing ? null : <Content node={content} />}
+                {isEditing ? null : <Content node={value} />}
                 {isEditable ?
                     isEditing ?
                         <div>
-                            <RichTextEditPanel value={content} onChange={handleContentChange} />
+                            <RichTextEditPanel value={value} onChange={handleContentChange} />
                             <button className={styles.button} onClick={endEditing}>confirm</button>
                         </div>
                         : <button className={styles.button} onClick={startEditing}>edit</button>
                     : <></>}
             </div>
-
         </div>
     );
 };

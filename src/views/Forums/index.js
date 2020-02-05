@@ -22,6 +22,87 @@ import {
     TOGGLE_FORUMS_FILTERING_METHOD
 } from "./constants";
 
+const webFrontPage = [
+    {
+        "type": "paragraph",
+        "children": [
+            {
+                "text": "Welcome! This is a forum platform app built with react, redux, some react-bootstrap component, plus a customized Rich Text Editor in Slate.js. A full demo will be hosted later!🧙💎👍",
+                "bold": true
+            }
+        ]
+    },
+    {
+        "type": "numbered-list",
+        "children": [
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "Finished functionalities: ✌️✌️✌️🎉"
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "1. core forum functionality like navigation, activity counter, categories, authentication, etc."
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "2. forums page/topics page/discussion page/profile page"
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "3. rich tect editor for reply/bulletin/forum/topic editing with formating and emojis"
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "Future functionalities: 😱😋"
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "1. full text search in the forums"
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "2. profile editor"
+                    }
+                ]
+            },
+            {
+                "type": "list-item",
+                "children": [
+                    {
+                        "text": "3. support image and outside links in discussion"
+                    }
+                ]
+            }
+        ]
+    }
+];
+
 const Forums = () => {
     const dispatch = useDispatch();
     const filteringMethod = useSelector(state => state.forums.filteringMethod);
@@ -61,13 +142,6 @@ const Forums = () => {
     const update = () => {
         updateForums();
     };
-
-    const webFrontPage = [
-        {
-            type: "paragraph",
-            children: [{ text: "home" }]
-        }
-    ];
 
 
     useEffect(update, [])

@@ -4,8 +4,6 @@ import { useLocation } from "react-router-dom";
 
 import HeaderBar from "components/Header";
 
-import { createAddress } from "utility/utility";
-
 import { UPDATE_APP_AUTH } from "views/App/constants";
 
 const Header = () => {

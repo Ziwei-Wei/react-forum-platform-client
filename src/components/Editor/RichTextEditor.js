@@ -34,7 +34,6 @@ const RichTextEditor = ({ forumId, topicId, token, update }) => {
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
     const [value, setValue] = useState(
-        deserialize(localStorage.getItem("content")) ||
         INIT
     );
 

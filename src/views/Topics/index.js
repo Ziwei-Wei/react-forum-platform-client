@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -38,20 +38,41 @@ const Topics = () => {
     const sortMethod = useSelector(state => state.topics.sortMethod);
     const topicList = useSelector(state => state.topics.topicList);
     const isLoading = useSelector(state => state.topics.isLoading);
+    const [bulletin, setBulletin] = useState(null)
+
+    const handleBulletinChange = (value) => {
+        setBulletin(value)
+    }
+
+    const handleBulletinSubmit = async () => {
+        await axios.post(
+            `/api/forum/${location.state.forumId}/bulletin`,
+            { bulletin: bulletin }
+        );
+    }
 
     const updateTopics = async () => {
         try {
             dispatch({ type: UPDATE_TOPICS_START });
 
-            const res = await axios.get(
+            const resTopic = await axios.get(
                 `/api/forum/${location.state.forumId}/topic?sort_method=${sortMethod}`
             );
 
-            console.log(res)
+            const resBulletin = await axios.get(
+                `/api/forum/${location.state.forumId}/bulletin`
+            );
+
+            if (resBulletin.data.bulletin) {
+                setBulletin(resBulletin.data.bulletin)
+            }
+
+            console.log("here")
+            console.log(bulletin)
 
             dispatch({
                 type: UPDATE_TOPICS_SUCCESS,
-                topicList: res.data
+                topicList: resTopic.data
             });
         } catch (error) {
             dispatch({
@@ -62,8 +83,6 @@ const Topics = () => {
     };
 
     const initTopics = () => {
-        console.log(username)
-        console.log(location.state.forumAdmin)
         dispatch({
             type: UPDATE_APP_ADDRESS,
             forumName: params.forumName,
@@ -92,7 +111,7 @@ const Topics = () => {
 
     return (
         <div className={styles.container}>
-            <Bulletin isEditable={isAdmin} />
+            <Bulletin value={bulletin} isEditable={isAdmin} onSubmit={handleBulletinSubmit} onChange={handleBulletinChange} />
             <TopicToolBar url={`/api/forum/${forumId}/topic`} accessToken={accessToken} onSubmit={update} />
             <TopicListController
                 topicSortMethods={TOPICS_SORT_METHODS}

@@ -12,11 +12,17 @@ import {
     UPDATE_USER_FAILURE
 } from "./constants";
 
+import {
+    UPDATE_APP_TOKEN,
+} from "views/App/constants";
+
 const Profile = () => {
     const params = useParams();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
     const accessToken = useSelector(state => state.app.accessToken);
+    const username = useSelector(state => state.app.username);
+    const password = useSelector(state => state.app.password);
 
     const initUser = async () => {
         dispatch({
@@ -29,12 +35,10 @@ const Profile = () => {
     const updateUser = async () => {
         try {
             dispatch({ type: UPDATE_USER_START });
-
-            const res = await axios.get(`/api/user/${params.username}`, {
-                headers: { Authorization: `Bearer ${accessToken}` }
-            });
-
-            if (res) {
+            try {
+                const res = await axios.get(`/api/user/${params.username}`, {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
                 dispatch({
                     type: UPDATE_USER_SUCCESS,
                     email: res.data.email,
@@ -42,8 +46,34 @@ const Profile = () => {
                     topicList: res.data.topics,
                     replyList: res.data.replies
                 });
-                console.log("this is user");
-                console.log(user);
+            } catch (error) {
+                if (error.response.status == 401) {
+                    var res = await axios.post(`/api/session/local`, {
+                        username: username,
+                        password: password
+                    });
+
+                    if (res.status != 200) {
+                        throw Error("authentication failed");
+                    }
+
+                    dispatch({
+                        type: UPDATE_APP_TOKEN,
+                        accessToken: res.data.accessToken
+                    })
+
+                    res = await axios.get(`/api/user/${params.username}`, {
+                        headers: { Authorization: `Bearer ${res.data.accessToken}` }
+                    });
+
+                    dispatch({
+                        type: UPDATE_USER_SUCCESS,
+                        email: res.data.email,
+                        avatarUrl: res.data.avatarUrl,
+                        topicList: res.data.topics,
+                        replyList: res.data.replies
+                    });
+                }
             }
         } catch (error) {
             dispatch({
